@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const InspectionResult = ({ result }) => {
   return (
-    <div className="h-full lg:col-span-1">
+    <div className="h-full">
       <AnimatePresence mode="wait">
         {result ? (
           /* Result Card */
@@ -13,7 +13,7 @@ const InspectionResult = ({ result }) => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-full flex flex-col"
+            className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 h-full flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center gap-2 mb-6">
@@ -52,13 +52,12 @@ const InspectionResult = ({ result }) => {
             </div>
           </motion.div>
         ) : (
-          /* Empty State / Placeholder */
           <motion.div 
             key="empty"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-slate-50 rounded-2xl border border-dashed border-slate-200 h-full flex flex-col items-center justify-center text-slate-400 p-6 text-center"
+            className="bg-slate-50 rounded-2xl border border-dashed border-slate-200 h-full flex flex-col items-center justify-center text-slate-400 p-6 text-center shadow-lg"
           >
             <ScanLine size={48} className="mb-4 opacity-20" />
             <p className="font-medium">Ready for Inspection</p>

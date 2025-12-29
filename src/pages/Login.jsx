@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabase';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, ShieldCheck } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   
-  // Form State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
@@ -48,7 +47,6 @@ const Login = () => {
         if (error) throw error;
         else toast.success("User Registration successful!");
 
-        // Manually create profile row if trigger fails or for extra safety
         if (data.user) {
           await supabase.from('profiles').upsert({
             id: data.user.id,
@@ -75,17 +73,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex bg-slate-50">
-      <ToastContainer 
-      position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
+      <ToastContainer position="top-right" theme="dark" autoClose={2000} />
+      
+      {/* Left Side*/}
       <div className="hidden lg:flex w-1/2 bg-slate-900 text-white flex-col justify-center px-12 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-blue-500 via-slate-900 to-slate-900"></div>
         <div className="z-10">
@@ -94,39 +84,48 @@ const Login = () => {
           <p className="text-slate-400 text-lg max-w-md">
             Automate your defect detection process with our AI-driven analytics platform. 
           </p>
-          
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">
+      {/* Right Side*/}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 md:p-12">
+        
+        {/* Mobile Header*/}
+        <div className="lg:hidden flex flex-col items-center mb-8 text-center">
+            <img src="/logo.png" alt="Logo" className="w-16 h-16 rounded-full border-2 border-blue-400 object-cover mb-4" />
+            <h1 className="text-2xl font-bold text-slate-900">ScreenSense AI</h1>
+            <p className="text-slate-500 text-sm mt-2">AI-driven defect detection</p>
+        </div>
+
+        <div className="w-full max-w-md bg-white md:bg-transparent p-6 md:p-0 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-slate-100 md:border-none">
+          <div className="mb-8 text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
               {isSignUp ? 'Create Account' : 'Welcome Back'}
             </h2>
-            <p className="text-slate-500">
+            <p className="text-slate-500 text-sm md:text-base">
               {isSignUp ? 'Enter your details to get started.' : 'Please enter your credentials to sign in.'}
             </p>
           </div>
 
           <button
-         onClick={handleGoogleLogin}
-         type="button"
-         className="w-full mb-6 py-3 bg-white border border-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-3 shadow-sm cursor-pointer"
-       >
-         <img src="/google.svg" alt="Google" />
-         Sign in with Google
-       </button>
+           onClick={handleGoogleLogin}
+           type="button"
+           className="w-full mb-6 py-3 bg-white border border-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-3 shadow-sm cursor-pointer"
+          >
+            <img src="/google.svg" alt="Google" className="w-5 h-5" />
+            Sign in with Google
+          </button>
 
-       <div className="relative mb-6">
-         <div className="absolute inset-0 flex items-center">
-           <div className="w-full border-t border-slate-200"></div>
+         <div className="relative mb-6">
+           <div className="absolute inset-0 flex items-center">
+             <div className="w-full border-t border-slate-200"></div>
+           </div>
+           <div className="relative flex justify-center text-sm">
+             <span className="px-2 bg-white (md:bg-slate-50) text-slate-500">Or continue with email</span>
+           </div>
          </div>
-         <div className="relative flex justify-center text-sm">
-           <span className="px-2 bg-white text-slate-500">Or continue with email</span>
-         </div>
-       </div>
 
+          {/* Form */}
           <form onSubmit={handleAuth} className="space-y-4">
             {isSignUp && (
               <div>
